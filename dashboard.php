@@ -55,10 +55,11 @@ $stmtTx->execute([$userId]);
 $transactions = $stmtTx->fetchAll();
 
 $pageTitle = 'Investor Dashboard';
+$useSidebar = true;
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+<div class="max-w-7xl mx-auto space-y-8">
     <!-- Header alert messages -->
     <?php if ($message): ?>
         <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-lg text-sm flex items-center justify-between">

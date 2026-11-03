@@ -55,10 +55,11 @@ $pendingWithdrawals = $pdo->query("
 ")->fetchAll();
 
 $pageTitle = 'Admin Trading Pool Control';
+$useSidebar = true;
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+<div class="max-w-7xl mx-auto space-y-8">
     <div class="flex flex-col md:flex-row md:items-center justify-between border-b-2 border-amber-500 pb-4 gap-4">
         <div>
             <div class="text-xs uppercase font-bold text-amber-600 tracking-wider flex items-center">

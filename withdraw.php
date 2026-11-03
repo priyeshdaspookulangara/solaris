@@ -31,10 +31,11 @@ $stmtW->execute([$userId]);
 $withdrawals = $stmtW->fetchAll();
 
 $pageTitle = 'Daily Liquidity Withdrawal';
+$useSidebar = true;
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<div class="max-w-4xl mx-auto px-4 py-8 space-y-6">
+<div class="max-w-5xl mx-auto space-y-6">
     <div class="border-b-2 border-blue-600 pb-3">
         <h1 class="text-2xl font-bold text-slate-900 flex items-center">
             <span class="w-2.5 h-6 bg-blue-600 rounded-sm inline-block mr-3"></span>

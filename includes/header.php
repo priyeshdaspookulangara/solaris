@@ -2,6 +2,7 @@
 // includes/header.php
 require_once __DIR__ . '/Auth.php';
 $currentUser = Auth::user();
+$isSidebarLayout = isset($useSidebar) && $useSidebar && $currentUser;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,8 +27,39 @@ $currentUser = Auth::user();
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
-    <!-- Navbar -->
+<body class="bg-slate-50 text-slate-800 min-h-screen <?= $isSidebarLayout ? 'flex flex-row' : 'flex flex-col' ?> font-sans">
+
+<?php if ($isSidebarLayout): ?>
+    <!-- Left Sidebar (Aside) -->
+    <?php include __DIR__ . '/sidebar.php'; ?>
+
+    <!-- Main Content Area with Top Header Bar -->
+    <div class="flex-1 flex flex-col min-w-0 min-h-screen bg-slate-50">
+        <!-- Top App Header -->
+        <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 sticky top-0 z-10 shadow-sm">
+            <div class="flex items-center space-x-3">
+                <span class="text-lg font-bold text-slate-800"><?= htmlspecialchars($pageTitle ?? 'Portal') ?></span>
+                <span class="hidden sm:inline-block text-xs bg-blue-100 text-blue-800 font-semibold px-2.5 py-0.5 rounded-full">SOLARIA 40 ACTIVE</span>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <div class="text-right">
+                    <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Wallet Liquidity</div>
+                    <div class="text-base font-bold text-emerald-600 font-mono">$<?= number_format($currentUser['wallet_balance'], 2) ?></div>
+                </div>
+                <div class="h-8 w-px bg-slate-200 hidden sm:block"></div>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs uppercase">
+                        <?= substr($currentUser['username'], 0, 2) ?>
+                    </div>
+                    <span class="text-sm font-semibold text-slate-700 hidden md:inline"><?= htmlspecialchars($currentUser['username']) ?></span>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow p-6">
+<?php else: ?>
+    <!-- Public Navbar -->
     <nav class="bg-[#0f1f38] text-white border-b border-slate-700 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
@@ -71,3 +103,4 @@ $currentUser = Auth::user();
         </div>
     </nav>
     <main class="flex-grow">
+<?php endif; ?>
