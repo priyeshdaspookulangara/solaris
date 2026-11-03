@@ -1,6 +1,5 @@
 -- Solaris / Solaria 40 Database Schema
-CREATE DATABASE IF NOT EXISTS solaris CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE solaris;
+-- Note: Tables will be created in whichever database is connected in config/database.php
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,

@@ -1,11 +1,15 @@
 <?php
 // config/database.php
 
-define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
-define('DB_PORT', getenv('DB_PORT') ?: '3306');
-define('DB_NAME', getenv('DB_NAME') ?: 'solaris');
-define('DB_USER', getenv('DB_USER') ?: 'solaris_user');
-define('DB_PASS', getenv('DB_PASS') ?: 'solaris_pass');
+// Optional local configuration override for shared hosting environments (e.g. cPanel, Plesk)
+$configFile = __DIR__ . '/config.php';
+$localConfig = file_exists($configFile) ? require $configFile : [];
+
+define('DB_HOST', $localConfig['DB_HOST'] ?? getenv('DB_HOST') ?: '127.0.0.1');
+define('DB_PORT', $localConfig['DB_PORT'] ?? getenv('DB_PORT') ?: '3306');
+define('DB_NAME', $localConfig['DB_NAME'] ?? getenv('DB_NAME') ?: 'solaris');
+define('DB_USER', $localConfig['DB_USER'] ?? getenv('DB_USER') ?: 'solaris_user');
+define('DB_PASS', $localConfig['DB_PASS'] ?? getenv('DB_PASS') ?: 'solaris_pass');
 
 class Database {
     private static ?PDO $instance = null;
@@ -18,11 +22,7 @@ class Database {
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
             ];
-            try {
-                self::$instance = new PDO($dsn, DB_USER, DB_PASS, $options);
-            } catch (PDOException $e) {
-                die("Database connection failed: " . $e->getMessage());
-            }
+            self::$instance = new PDO($dsn, DB_USER, DB_PASS, $options);
         }
         return self::$instance;
     }
